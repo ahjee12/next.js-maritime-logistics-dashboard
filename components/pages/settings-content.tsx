@@ -20,6 +20,11 @@ import {
   Trash2,
   Key,
 } from "lucide-react"
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -86,10 +91,12 @@ export function SettingsContent() {
   const [roleFilter,    setRoleFilter]    = useState<string>("all")
   const [notifications, setNotifications] = useState<NotificationSetting[]>(MOCK_NOTIFICATION_SETTINGS)
   const [users,         setUsers]         = useState<UserType[]>(MOCK_USERS)
-  const [addUserOpen,   setAddUserOpen]   = useState(false)
-  const [editUserOpen,  setEditUserOpen]  = useState(false)
-  const [editingUser,   setEditingUser]   = useState<UserType | null>(null)
-  const [editForm,      setEditForm]      = useState<EditUserForm | null>(null)
+  const [addUserOpen,      setAddUserOpen]      = useState(false)
+  const [editUserOpen,     setEditUserOpen]     = useState(false)
+  const [editingUser,      setEditingUser]      = useState<UserType | null>(null)
+  const [editForm,         setEditForm]         = useState<EditUserForm | null>(null)
+  const [deleteConfirmOpen,setDeleteConfirmOpen]= useState(false)
+  const [userToDelete,     setUserToDelete]     = useState<UserType | null>(null)
 
   // Add user form state
   const [newName,       setNewName]       = useState("")
@@ -168,6 +175,31 @@ export function SettingsContent() {
             Manage users, permissions, and system preferences
           </p>
         </div>
+
+        {/* ── Delete Confirmation Dialog ── */}
+        <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete User?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete <span className="font-semibold text-foreground">{userToDelete?.name}</span>?
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setUserToDelete(null)}>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive text-white hover:bg-[rgb(226,107,95)]"
+                onClick={() => {
+                  if (userToDelete) setUsers((prev) => prev.filter((u) => u.id !== userToDelete.id))
+                  setUserToDelete(null)
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* ── Edit User Dialog ── */}
         <Dialog open={editUserOpen} onOpenChange={setEditUserOpen}>
@@ -359,21 +391,21 @@ export function SettingsContent() {
                           <td className="px-4 py-3 text-right">
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-[rgb(95,192,195)] hover:text-white">
                                   <MoreHorizontal className="h-4 w-4" />
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => openEditUser(user)}>
+                                <DropdownMenuItem className="focus:bg-[rgb(107,166,214)] focus:text-white cursor-pointer" onClick={() => openEditUser(user)}>
                                   <Edit2 className="mr-2 h-4 w-4" />Edit
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem className="focus:bg-[rgb(107,166,214)] focus:text-white cursor-pointer">
                                   <Key className="mr-2 h-4 w-4" />Reset Password
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                  className="text-destructive"
-                                  onClick={() => setUsers((prev) => prev.filter((u) => u.id !== user.id))}
+                                  className="text-destructive focus:bg-[rgb(226,107,95)] focus:text-white cursor-pointer"
+                                  onClick={() => { setUserToDelete(user); setDeleteConfirmOpen(true) }}
                                 >
                                   <Trash2 className="mr-2 h-4 w-4" />Delete
                                 </DropdownMenuItem>
@@ -407,21 +439,21 @@ export function SettingsContent() {
                       </div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 hover:bg-[rgb(95,192,195)] hover:text-white">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => openEditUser(user)}>
+                          <DropdownMenuItem className="focus:bg-[rgb(107,166,214)] focus:text-white cursor-pointer" onClick={() => openEditUser(user)}>
                             <Edit2 className="mr-2 h-4 w-4" />Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem className="focus:bg-[rgb(107,166,214)] focus:text-white cursor-pointer">
                             <Key className="mr-2 h-4 w-4" />Reset Password
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
-                            className="text-destructive"
-                            onClick={() => setUsers((prev) => prev.filter((u) => u.id !== user.id))}
+                            className="text-destructive focus:bg-[rgb(226,107,95)] focus:text-white cursor-pointer"
+                            onClick={() => { setUserToDelete(user); setDeleteConfirmOpen(true) }}
                           >
                             <Trash2 className="mr-2 h-4 w-4" />Delete
                           </DropdownMenuItem>

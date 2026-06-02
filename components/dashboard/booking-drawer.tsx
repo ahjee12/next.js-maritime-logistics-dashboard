@@ -24,7 +24,7 @@ import {
   Download, CheckCircle2, Circle, Loader2, X,
   Pencil, Check, RotateCcw, History, User, Plus, Trash2,
 } from "lucide-react"
-import Image from "next/image"
+import { VesselMapDynamic } from "@/components/dashboard/vessel-map-dynamic"
 import { MOCK_VESSELS, type Booking, type BookingStatus } from "@/lib/mock-data"
 import { cn } from "@/lib/utils"
 
@@ -110,6 +110,11 @@ function formatDate(s: string) {
   const d = new Date(s)
   if (isNaN(d.getTime())) return s
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+}
+
+function parseCoord(s: string): number {
+  const v = parseFloat(s)
+  return (s.endsWith("S") || s.endsWith("W")) ? -v : v
 }
 
 function toInputDate(s: string) {
@@ -455,31 +460,31 @@ function BookingDetailsContent({ booking, onClose }: { booking: Booking; onClose
             </Badge>
             {editMode ? (
               <>
-                <Button variant="ghost" size="icon" className="h-7 w-7 text-status-approved hover:bg-status-approved/10" title="Save" onClick={() => {
+                <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-[rgb(95,192,195)] hover:text-white" title="Save" onClick={() => {
                     const beforeForm = initForm(booking, savedEdits ?? undefined)
                     setPendingChanges(getChanges(beforeForm, editForm))
                     setConfirmOpen(true)
                   }}>
                   <Check className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-7 w-7 text-status-delayed hover:bg-status-delayed/10" title="Cancel" onClick={handleCancelEdit}>
+                <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-transparent hover:ring-1 hover:ring-[rgb(107,166,214)]" title="Cancel" onClick={handleCancelEdit}>
                   <X className="h-4 w-4" />
                 </Button>
               </>
             ) : (
               <>
-                <Button variant="ghost" size="icon" className="h-7 w-7" title="Edit"
+                <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-[rgb(95,192,195)] hover:text-white" title="Edit"
                   onClick={() => { setEditMode(true); setShowHistory(false); setShowLocation(false) }}>
                   <Pencil className="h-3.5 w-3.5" />
                 </Button>
-                <Button variant="ghost" size="icon" className={cn("h-7 w-7", showHistory && "bg-muted")} title="History"
+                <Button variant="ghost" size="icon" className={cn("h-7 w-7 hover:bg-[rgb(95,192,195)] hover:text-white", showHistory && "bg-[rgb(95,192,195)] text-white")} title="History"
                   onClick={() => { const next = !showHistory; setShowHistory(next); if (next) scrollToTop() }}>
                   <History className="h-3.5 w-3.5" />
                 </Button>
               </>
             )}
             {onClose && (
-              <Button variant="ghost" size="icon" className="h-7 w-7 sm:hidden" onClick={onClose}>
+              <Button variant="ghost" size="icon" className="h-7 w-7 sm:hidden hover:bg-transparent hover:ring-1 hover:ring-[rgb(107,166,214)]" onClick={onClose}>
                 <X className="h-4 w-4" />
               </Button>
             )}
@@ -759,24 +764,14 @@ function BookingDetailsContent({ booking, onClose }: { booking: Booking; onClose
                       </Button>
                     ) : undefined}
                   />
-                  {showLocation && booking.status === "in-transit" && (
-                    <div className="ml-8 mb-3">
-                      <div className="relative overflow-hidden rounded-lg">
-                        <Image src="/map.png" alt="Current vessel location map" width={500} height={300} className="w-full h-auto object-cover" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                          <div className="bg-background border border-border rounded-lg px-3 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
-                            <Ship className="h-4 w-4 text-accent shrink-0" />
-                            <div>
-                              <div className="text-xs font-semibold text-foreground">
-                                {booking.currentLocation?.name ?? booking.vesselName.toUpperCase()}
-                              </div>
-                              <div className="text-[10px] text-muted-foreground">
-                                {booking.currentLocation ? `${booking.currentLocation.lat}, ${booking.currentLocation.lng}` : "Tracking..."}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                  {showLocation && booking.status === "in-transit" && booking.currentLocation && (
+                    <div className="ml-8 mb-3 overflow-hidden rounded-lg border border-border">
+                      <VesselMapDynamic
+                        name={booking.currentLocation.name}
+                        lat={parseCoord(booking.currentLocation.lat)}
+                        lng={parseCoord(booking.currentLocation.lng)}
+                        coordLabel={`${booking.currentLocation.lat}, ${booking.currentLocation.lng}`}
+                      />
                     </div>
                   )}
                   <TimelineStep label="Discharged" status={booking.timeline.discharged.status} date={booking.timeline.discharged.date} location={booking.podName} isLast />
@@ -828,12 +823,12 @@ function BookingDetailsContent({ booking, onClose }: { booking: Booking; onClose
                     </div>
                   </div>
                   {editMode ? (
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-status-delayed shrink-0"
+                    <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:bg-[rgb(95,192,195)] hover:text-white shrink-0"
                       onClick={() => removeDoc(i)}>
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   ) : doc.status === "available" ? (
-                    <Button variant="ghost" size="sm" className="h-8 px-2 text-accent hover:bg-accent hover:text-white shrink-0">
+                    <Button variant="ghost" size="sm" className="h-8 px-2 text-accent hover:bg-[rgb(95,192,195)] hover:text-white shrink-0">
                       <Download className="h-4 w-4" />
                     </Button>
                   ) : (

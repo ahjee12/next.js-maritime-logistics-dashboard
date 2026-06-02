@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import {
-  Anchor,
   LayoutDashboard,
   Ship,
   Settings,
@@ -53,11 +52,17 @@ export function AppSidebar({ children }: AppSidebarProps) {
 
   // Desktop Sidebar
   const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className={cn(
-      "flex flex-col h-full bg-primary text-primary-foreground",
-      !isMobile && "transition-all duration-300",
-      !isMobile && (collapsed ? "w-[72px]" : "w-64")
-    )}>
+    <div
+      className={cn(
+        "flex flex-col h-full text-primary-foreground",
+        !isMobile && "transition-all duration-300",
+        !isMobile && (collapsed ? "w-[72px]" : "w-64")
+      )}
+      style={{
+        backgroundColor: "rgb(209 214 215)",
+        "--primary-foreground": "rgb(25 60 70)",
+      } as React.CSSProperties}
+    >
       {/* Logo */}
       <div className={cn(
         "flex items-center h-16 px-4 border-b border-primary-foreground/10",
@@ -67,9 +72,8 @@ export function AppSidebar({ children }: AppSidebarProps) {
           "flex items-center gap-3",
           collapsed && !isMobile && "gap-0"
         )}>
-          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent shrink-0">
-            <Anchor className="h-5 w-5 text-accent-foreground" />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sinokor.PNG" alt="SINOKOR" width={44} height={44} className="object-contain shrink-0" />
           {(!collapsed || isMobile) && (
             <div className="flex flex-col">
               <span className="text-lg font-semibold tracking-tight">SINOKOR</span>
@@ -145,7 +149,7 @@ export function AppSidebar({ children }: AppSidebarProps) {
         collapsed && !isMobile && "px-2"
       )}>
         <div className={cn(
-          "flex items-center gap-3 p-2 rounded-lg hover:bg-primary-foreground/5 cursor-pointer",
+          "flex items-center gap-3 p-2 rounded-lg hover:bg-[rgb(95,192,195)]/20 cursor-pointer",
           collapsed && !isMobile && "justify-center p-1"
         )}>
           <Avatar className="h-9 w-9 shrink-0">
@@ -184,7 +188,8 @@ export function AppSidebar({ children }: AppSidebarProps) {
       {/* Mobile Header & Content */}
       <div className="flex flex-col flex-1 min-w-0">
         {/* Mobile Header */}
-        <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between h-14 px-4 bg-primary text-primary-foreground border-b border-primary-foreground/10">
+        <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between h-14 px-4 text-primary-foreground border-b border-primary-foreground/10"
+          style={{ backgroundColor: "rgb(209 214 215)", "--primary-foreground": "rgb(25 60 70)" } as React.CSSProperties}>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button
@@ -206,9 +211,8 @@ export function AppSidebar({ children }: AppSidebarProps) {
           </Sheet>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent">
-              <Anchor className="h-4 w-4 text-accent-foreground" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sinokor.PNG" alt="SINOKOR" width={32} height={32} className="object-contain shrink-0" />
             <span className="text-base font-semibold">SINOKOR</span>
           </div>
 
