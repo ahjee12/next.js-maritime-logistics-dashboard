@@ -1,11 +1,16 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { KPICards } from "@/components/dashboard/kpi-cards"
 import { SearchFilters } from "@/components/dashboard/search-filters"
 import { BookingsTable } from "@/components/dashboard/bookings-table"
 import { BookingDrawer } from "@/components/dashboard/booking-drawer"
+import { BookingStatsContent } from "@/components/pages/booking-stats-content"
+import { DelayedCargoStatsContent } from "@/components/pages/delayed-cargo-stats-content"
+import { VesselStatsContent } from "@/components/pages/vessel-stats-content"
 import { MOCK_BOOKINGS, type Booking } from "@/lib/mock-data"
+
+type View = "dashboard" | "booking-stats" | "delayed-stats" | "vessel-stats"
 
 export function DashboardContent() {
   const [filters, setFilters] = useState({
@@ -14,9 +19,34 @@ export function DashboardContent() {
     pol: null as string | null,
     pod: null as string | null,
   })
-  
+
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [view, setView] = useState<View>("dashboard")
+
+  // Sync initial history state so the very first back press lands on dashboard
+  useEffect(() => {
+    window.history.replaceState({ view: "dashboard" }, "")
+  }, [])
+
+  // Handle browser / mouse back button
+  useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      const v: View = e.state?.view ?? "dashboard"
+      setView(v)
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [])
+
+  const navigateTo = useCallback((next: View) => {
+    window.history.pushState({ view: next }, "")
+    setView(next)
+  }, [])
+
+  const handleBack = useCallback(() => {
+    window.history.back()
+  }, [])
 
   const filteredBookings = useMemo(() => {
     return MOCK_BOOKINGS.filter((booking) => {
@@ -51,6 +81,10 @@ export function DashboardContent() {
     setDrawerOpen(true)
   }
 
+  if (view === "booking-stats")  return <BookingStatsContent        onBack={handleBack} />
+  if (view === "delayed-stats")  return <DelayedCargoStatsContent   onBack={handleBack} />
+  if (view === "vessel-stats")   return <VesselStatsContent         onBack={handleBack} />
+
   return (
     <>
       <div className="px-4 sm:px-6 py-4 sm:py-6 max-w-[1600px] mx-auto">
@@ -66,7 +100,11 @@ export function DashboardContent() {
           </div>
 
           {/* KPI Cards */}
-          <KPICards />
+          <KPICards
+            onTotalBookingsClick={() => navigateTo("booking-stats")}
+            onDelayedCargoClick={() => navigateTo("delayed-stats")}
+            onActiveVesselsClick={() => navigateTo("vessel-stats")}
+          />
 
           {/* Search & Filters */}
           <SearchFilters filters={filters} onFiltersChange={setFilters} />

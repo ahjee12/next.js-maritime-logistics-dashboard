@@ -583,3 +583,136 @@ export const MOCK_NOTIFICATION_SETTINGS: NotificationSetting[] = [
   { id: "n5", category: "System Alerts", email: true, push: false, sms: false },
   { id: "n6", category: "Weekly Reports", email: true, push: false, sms: false },
 ]
+
+// Booking Statistics — Monthly Data (last 12 months)
+export const BOOKING_MONTHLY_DATA = [
+  { month: "Jun '25", total: 198, approved: 88, inTransit: 54, delayed: 31, pending: 25 },
+  { month: "Jul '25", total: 214, approved: 95, inTransit: 61, delayed: 35, pending: 23 },
+  { month: "Aug '25", total: 207, approved: 91, inTransit: 58, delayed: 33, pending: 25 },
+  { month: "Sep '25", total: 223, approved: 102, inTransit: 63, delayed: 30, pending: 28 },
+  { month: "Oct '25", total: 241, approved: 110, inTransit: 68, delayed: 37, pending: 26 },
+  { month: "Nov '25", total: 228, approved: 104, inTransit: 65, delayed: 34, pending: 25 },
+  { month: "Dec '25", total: 219, approved: 98, inTransit: 62, delayed: 36, pending: 23 },
+  { month: "Jan '26", total: 235, approved: 108, inTransit: 67, delayed: 33, pending: 27 },
+  { month: "Feb '26", total: 248, approved: 115, inTransit: 70, delayed: 38, pending: 25 },
+  { month: "Mar '26", total: 262, approved: 121, inTransit: 74, delayed: 40, pending: 27 },
+  { month: "Apr '26", total: 255, approved: 118, inTransit: 72, delayed: 36, pending: 29 },
+  { month: "May '26", total: 267, approved: 124, inTransit: 76, delayed: 39, pending: 28 },
+]
+
+export const TOTAL_BOOKINGS_12M = BOOKING_MONTHLY_DATA.reduce((s, d) => s + d.total, 0)
+
+// Daily data — last 7 days (Sun = today)
+export const BOOKING_DAILY_DATA = [
+  { month: "Mon", total: 8,  approved: 3, inTransit: 2, delayed: 2, pending: 1 },
+  { month: "Tue", total: 11, approved: 5, inTransit: 3, delayed: 2, pending: 1 },
+  { month: "Wed", total: 13, approved: 6, inTransit: 4, delayed: 2, pending: 1 },
+  { month: "Thu", total: 12, approved: 5, inTransit: 3, delayed: 2, pending: 2 },
+  { month: "Fri", total: 14, approved: 6, inTransit: 4, delayed: 3, pending: 1 },
+  { month: "Sat", total: 9,  approved: 4, inTransit: 2, delayed: 2, pending: 1 },
+  { month: "Today", total: 9, approved: 4, inTransit: 2, delayed: 2, pending: 1 },
+]
+
+// Weekly data — last 5 weeks
+export const BOOKING_WEEKLY_DATA = [
+  { month: "Week 1",    total: 56, approved: 24, inTransit: 16, delayed: 10, pending: 6 },
+  { month: "Week 2",    total: 61, approved: 27, inTransit: 18, delayed: 10, pending: 6 },
+  { month: "Week 3",    total: 67, approved: 30, inTransit: 19, delayed: 11, pending: 7 },
+  { month: "Week 4",    total: 64, approved: 28, inTransit: 18, delayed: 11, pending: 7 },
+  { month: "This Week", total: 19, approved: 8,  inTransit: 6,  delayed: 3,  pending: 2 },
+]
+
+// 5-year monthly data (Jun 2021 – May 2026)
+export const BOOKING_5YEAR_DATA = [
+  { month: "Jun '21", total: 142, approved: 62, inTransit: 38, delayed: 25, pending: 17 },
+  { month: "Jul '21", total: 151, approved: 66, inTransit: 41, delayed: 27, pending: 17 },
+  { month: "Aug '21", total: 148, approved: 64, inTransit: 40, delayed: 27, pending: 17 },
+  { month: "Sep '21", total: 155, approved: 68, inTransit: 43, delayed: 26, pending: 18 },
+  { month: "Oct '21", total: 162, approved: 72, inTransit: 46, delayed: 27, pending: 17 },
+  { month: "Nov '21", total: 157, approved: 69, inTransit: 44, delayed: 27, pending: 17 },
+  { month: "Dec '21", total: 149, approved: 65, inTransit: 41, delayed: 28, pending: 15 },
+  { month: "Jan '22", total: 158, approved: 70, inTransit: 44, delayed: 28, pending: 16 },
+  { month: "Feb '22", total: 163, approved: 72, inTransit: 46, delayed: 28, pending: 17 },
+  { month: "Mar '22", total: 170, approved: 76, inTransit: 48, delayed: 29, pending: 17 },
+  { month: "Apr '22", total: 167, approved: 74, inTransit: 47, delayed: 28, pending: 18 },
+  { month: "May '22", total: 172, approved: 77, inTransit: 48, delayed: 29, pending: 18 },
+  { month: "Jun '22", total: 168, approved: 74, inTransit: 47, delayed: 29, pending: 18 },
+  { month: "Jul '22", total: 176, approved: 78, inTransit: 50, delayed: 30, pending: 18 },
+  { month: "Aug '22", total: 173, approved: 77, inTransit: 49, delayed: 30, pending: 17 },
+  { month: "Sep '22", total: 180, approved: 80, inTransit: 51, delayed: 30, pending: 19 },
+  { month: "Oct '22", total: 185, approved: 83, inTransit: 52, delayed: 31, pending: 19 },
+  { month: "Nov '22", total: 179, approved: 80, inTransit: 50, delayed: 31, pending: 18 },
+  { month: "Dec '22", total: 171, approved: 76, inTransit: 48, delayed: 31, pending: 16 },
+  { month: "Jan '23", total: 181, approved: 81, inTransit: 51, delayed: 31, pending: 18 },
+  { month: "Feb '23", total: 186, approved: 83, inTransit: 53, delayed: 31, pending: 19 },
+  { month: "Mar '23", total: 193, approved: 87, inTransit: 55, delayed: 32, pending: 19 },
+  { month: "Apr '23", total: 189, approved: 85, inTransit: 54, delayed: 31, pending: 19 },
+  { month: "May '23", total: 195, approved: 88, inTransit: 56, delayed: 32, pending: 19 },
+  { month: "Jun '23", total: 188, approved: 84, inTransit: 53, delayed: 32, pending: 19 },
+  { month: "Jul '23", total: 198, approved: 89, inTransit: 57, delayed: 33, pending: 19 },
+  { month: "Aug '23", total: 193, approved: 87, inTransit: 55, delayed: 33, pending: 18 },
+  { month: "Sep '23", total: 201, approved: 91, inTransit: 58, delayed: 32, pending: 20 },
+  { month: "Oct '23", total: 208, approved: 94, inTransit: 60, delayed: 34, pending: 20 },
+  { month: "Nov '23", total: 202, approved: 91, inTransit: 58, delayed: 33, pending: 20 },
+  { month: "Dec '23", total: 194, approved: 87, inTransit: 56, delayed: 33, pending: 18 },
+  { month: "Jan '24", total: 205, approved: 93, inTransit: 59, delayed: 33, pending: 20 },
+  { month: "Feb '24", total: 211, approved: 96, inTransit: 61, delayed: 33, pending: 21 },
+  { month: "Mar '24", total: 219, approved: 100, inTransit: 63, delayed: 35, pending: 21 },
+  { month: "Apr '24", total: 214, approved: 97, inTransit: 62, delayed: 34, pending: 21 },
+  { month: "May '24", total: 220, approved: 101, inTransit: 64, delayed: 34, pending: 21 },
+  { month: "Jun '24", total: 210, approved: 95, inTransit: 60, delayed: 35, pending: 20 },
+  { month: "Jul '24", total: 219, approved: 99, inTransit: 62, delayed: 36, pending: 22 },
+  { month: "Aug '24", total: 215, approved: 97, inTransit: 61, delayed: 36, pending: 21 },
+  { month: "Sep '24", total: 223, approved: 101, inTransit: 64, delayed: 36, pending: 22 },
+  { month: "Oct '24", total: 231, approved: 105, inTransit: 66, delayed: 38, pending: 22 },
+  { month: "Nov '24", total: 225, approved: 102, inTransit: 64, delayed: 37, pending: 22 },
+  { month: "Dec '24", total: 216, approved: 98, inTransit: 62, delayed: 35, pending: 21 },
+  { month: "Jan '25", total: 228, approved: 104, inTransit: 65, delayed: 37, pending: 22 },
+  { month: "Feb '25", total: 234, approved: 107, inTransit: 67, delayed: 37, pending: 23 },
+  { month: "Mar '25", total: 243, approved: 111, inTransit: 70, delayed: 39, pending: 23 },
+  { month: "Apr '25", total: 238, approved: 108, inTransit: 68, delayed: 38, pending: 24 },
+  { month: "May '25", total: 244, approved: 112, inTransit: 70, delayed: 39, pending: 23 },
+  // Last 12 months
+  ...BOOKING_MONTHLY_DATA,
+]
+
+export const BOOKINGS_BREAKDOWN = {
+  last12Months: TOTAL_BOOKINGS_12M,
+  thisMonth:    BOOKING_MONTHLY_DATA[BOOKING_MONTHLY_DATA.length - 1].total,
+  thisWeek:     BOOKING_WEEKLY_DATA[BOOKING_WEEKLY_DATA.length - 1].total,
+  today:        BOOKING_DAILY_DATA[BOOKING_DAILY_DATA.length - 1].total,
+}
+
+// Delayed Cargo — Monthly Data (last 12 months)
+export const DELAYED_MONTHLY_DATA = [
+  { month: "Jun '25", total: 18, weather: 6, portCongestion: 5, documentation: 4, customs: 3 },
+  { month: "Jul '25", total: 21, weather: 8, portCongestion: 6, documentation: 4, customs: 3 },
+  { month: "Aug '25", total: 25, weather: 11, portCongestion: 7, documentation: 4, customs: 3 },
+  { month: "Sep '25", total: 19, weather: 6, portCongestion: 6, documentation: 4, customs: 3 },
+  { month: "Oct '25", total: 22, weather: 7, portCongestion: 7, documentation: 5, customs: 3 },
+  { month: "Nov '25", total: 20, weather: 6, portCongestion: 6, documentation: 5, customs: 3 },
+  { month: "Dec '25", total: 28, weather: 10, portCongestion: 8, documentation: 6, customs: 4 },
+  { month: "Jan '26", total: 24, weather: 9, portCongestion: 7, documentation: 5, customs: 3 },
+  { month: "Feb '26", total: 17, weather: 5, portCongestion: 5, documentation: 4, customs: 3 },
+  { month: "Mar '26", total: 15, weather: 4, portCongestion: 5, documentation: 4, customs: 2 },
+  { month: "Apr '26", total: 19, weather: 5, portCongestion: 6, documentation: 5, customs: 3 },
+  { month: "May '26", total: 23, weather: 7, portCongestion: 7, documentation: 5, customs: 4 },
+]
+
+export const TOTAL_DELAYED_12M = DELAYED_MONTHLY_DATA.reduce((s, d) => s + d.total, 0)
+
+// Vessel Fleet — Monthly Data (last 12 months)
+export const VESSEL_MONTHLY_DATA = [
+  { month: "Jun '25", active: 148, maintenance: 6, retired: 1, usedPurchase: 0, newPurchase: 0 },
+  { month: "Jul '25", active: 150, maintenance: 5, retired: 0, usedPurchase: 2, newPurchase: 0 },
+  { month: "Aug '25", active: 151, maintenance: 7, retired: 1, usedPurchase: 1, newPurchase: 0 },
+  { month: "Sep '25", active: 152, maintenance: 5, retired: 0, usedPurchase: 0, newPurchase: 1 },
+  { month: "Oct '25", active: 153, maintenance: 6, retired: 0, usedPurchase: 1, newPurchase: 0 },
+  { month: "Nov '25", active: 151, maintenance: 8, retired: 1, usedPurchase: 0, newPurchase: 0 },
+  { month: "Dec '25", active: 150, maintenance: 9, retired: 0, usedPurchase: 0, newPurchase: 0 },
+  { month: "Jan '26", active: 152, maintenance: 7, retired: 0, usedPurchase: 2, newPurchase: 0 },
+  { month: "Feb '26", active: 153, maintenance: 6, retired: 0, usedPurchase: 0, newPurchase: 1 },
+  { month: "Mar '26", active: 155, maintenance: 5, retired: 1, usedPurchase: 1, newPurchase: 1 },
+  { month: "Apr '26", active: 154, maintenance: 6, retired: 0, usedPurchase: 0, newPurchase: 0 },
+  { month: "May '26", active: 156, maintenance: 5, retired: 0, usedPurchase: 0, newPurchase: 2 },
+]

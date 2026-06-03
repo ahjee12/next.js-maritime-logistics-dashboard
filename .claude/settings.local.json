@@ -10,7 +10,9 @@
       "Bash(pkill -f \"next dev\")",
       "PowerShell(Stop-Process *)",
       "PowerShell(Set-Location \"D:\\\\GitHub\\\\maritime-logistics-dashboard\"; Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd \"D:\\\\GitHub\\\\maritime-logistics-dashboard\"; .\\\\node_modules\\\\.bin\\\\next.cmd dev' -PassThru | Select-Object Id)",
-      "PowerShell(Start-Sleep -Seconds 8; try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -TimeoutSec 5 -UseBasicParsing; \"OK: $\\($r.StatusCode\\)\" } catch { \"Not ready: $_\" })"
+      "PowerShell(Start-Sleep -Seconds 8; try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -TimeoutSec 5 -UseBasicParsing; \"OK: $\\($r.StatusCode\\)\" } catch { \"Not ready: $_\" })",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
